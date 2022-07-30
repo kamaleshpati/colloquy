@@ -1,0 +1,29 @@
+version: '3.7'
+services:
+  test_pgdb:
+    container_name: test_pgdb
+    image: postgres:13.4-alpine
+    restart: always
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    logging:
+      options:
+        max-size: 20m
+        max-file: "3"
+    volumes:
+      - db:/var/lib/postgres/data
+    networks:
+      - colloquy_test
+
+
+volumes:
+  media:
+    driver: local
+  db:
+    driver: local
+
+networks:
+  colloquy_test:
+    driver: bridge
