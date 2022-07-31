@@ -1,4 +1,4 @@
-package main
+package dockerized
 
 import (
 	"log"
@@ -7,10 +7,6 @@ import (
 	"os/signal"
 	"syscall"
 )
-
-func main() {
-	DockerRunner()
-}
 
 func DockerRunner() {
 	dockerUp()
@@ -35,7 +31,7 @@ func handleSystemSignal(dockerDown func()) (res int) {
 }
 
 func dockerUp() {
-	cmd := exec.Command("docker-compose", "-f", "./dockerized/resources/compose.test.yml", "up")
+	cmd := exec.Command("docker-compose", "-f", "dockerized/resources/compose.test.yml", "up")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
