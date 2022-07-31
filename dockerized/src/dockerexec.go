@@ -32,18 +32,15 @@ func handleSystemSignal(dockerDown func()) (res int) {
 
 func dockerUp() {
 	cmd := exec.Command("docker-compose", "-f", "dockerized/resources/compose.test.yml", "up")
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-
-	err := cmd.Run()
-
-	if err != nil {
-		log.Fatal(err)
-	}
+	errorLogger(cmd)
 }
 
 func dockerDown() {
-	cmd := exec.Command("docker-compose", "-f", "./dockerized/resources/compose.test.yml", "down")
+	cmd := exec.Command("docker-compose", "-f", "./dockerized/resources/compose.test.yml", "down", "--volumes")
+	errorLogger(cmd)
+}
+
+func errorLogger(cmd *exec.Cmd) {
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
